@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./App.css";
 import Navbar from "./Components/NavigationBar/Navbar";
-import UserList from "./Components/UsersList/UserList";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/Signup/SignUp";
 import { userContext } from "./userContext";
@@ -23,7 +22,6 @@ function App() {
             </Route>
             <Route path="/">
               <Navbar />
-              <UserList />
             </Route>
           </Switch>
         </userContext.Provider>
