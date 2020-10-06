@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { userContext } from "../../userContext";
 const Login = () => {
+  let history = useHistory();
+  const { setUser } = useContext(userContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -36,9 +39,10 @@ const Login = () => {
         users.push(jsonUsers[i]);
       }
       if (serachForEmail(users, email, password)) {
-        console.log("Login Accepted");
+        setUser(email);
+        history.push("/");
       } else {
-        console.log("hhhhh");
+        console.log("denied");
       }
     } catch (err) {
       console.log(err);
