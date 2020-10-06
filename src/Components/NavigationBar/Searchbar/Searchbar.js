@@ -1,10 +1,6 @@
 import React from "react";
 import "./Searchbar.css";
-const Searchbar = (props) => {
-  const onChangeValue = (e) => {
-    e.preventDefault();
-    props.onChangeValue(e.target.value);
-  };
+const Searchbar = () => {
   return (
     <div className="SearchBox">
       <form className="form-inline">
@@ -12,7 +8,6 @@ const Searchbar = (props) => {
           className="form-control"
           type="search"
           placeholder="Search With Email"
-          onChange={onChangeValue.bind(this)}
           aria-label="Search"
         />
       </form>

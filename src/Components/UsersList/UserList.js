@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { userContext } from "../../userContext";
 import "./UserList.css";
-const UserList = () => {
+import Seaerchbar from "../NavigationBar/Searchbar/Searchbar";
+const UserList = (props) => {
   const { user } = useContext(userContext);
   const [users, setUsers] = useState([]);
   const [storeUsers, setStoreUsers] = useState([]);
+
+  //Effect
   useEffect(() => {
     let arr = [];
     let retrievedData = localStorage.getItem("users");
@@ -16,8 +19,11 @@ const UserList = () => {
     arr = arr.filter(function (obj) {
       return obj.email !== user;
     });
+
     setUsers(arr);
-  }, [user]);
+  }, [user, props.searchValue]);
+
+  //Delete
   const handleDeleteClick = (email) => {
     let arr = [...storeUsers];
     let arr1 = [...users];
@@ -29,12 +35,14 @@ const UserList = () => {
     });
     setStoreUsers(arr);
     setUsers(arr1);
-    console.log(email);
-    console.log(arr);
     localStorage.setItem("users", JSON.stringify(arr));
   };
+
   return (
     <div>
+      <div className="searchbar">
+        <Seaerchbar />
+      </div>
       <div className="card">
         {users.map((human) => (
           <div key={Math.random()} className="passing__human">

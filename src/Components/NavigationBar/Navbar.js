@@ -1,19 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { userContext } from "../../userContext";
 import { Link, useHistory } from "react-router-dom";
-import Searchbar from "./Searchbar/Searchbar";
 import Cookies from "js-cookie";
-import UserList from "../UsersList/UserList";
 const Navbar = () => {
-  const { user, setUser } = useContext(userContext);
+  const { user } = useContext(userContext);
   const history = useHistory();
-  const [searchValue, setSearchValue] = useState(" ");
   const clickHandler = () => {
     Cookies.remove("user");
-  };
-  const onChangeValue = (newValue) => {
-    setSearchValue(newValue);
-    console.log(searchValue);
   };
 
   return (
@@ -31,7 +24,6 @@ const Navbar = () => {
               history.push("/login")
             )}
           </div>
-          <Searchbar onChangeValue={onChangeValue.bind(this)} />
         </div>
         <div className="logout__button">
           <Link to="/login">
@@ -45,7 +37,6 @@ const Navbar = () => {
           </Link>
         </div>
       </nav>
-      <UserList />
     </div>
   );
 };

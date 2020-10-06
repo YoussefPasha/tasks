@@ -6,6 +6,7 @@ import SignUp from "./Components/Signup/SignUp";
 import { userContext } from "./userContext";
 import Cookies from "js-cookie";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import UserList from "./Components/UsersList/UserList";
 function App() {
   const [user, setUser] = useState(Cookies.get("user"));
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
@@ -22,6 +23,7 @@ function App() {
             </Route>
             <Route path="/">
               <Navbar />
+              <UserList />
             </Route>
           </Switch>
         </userContext.Provider>
