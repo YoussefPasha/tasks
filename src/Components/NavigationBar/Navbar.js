@@ -1,15 +1,13 @@
 import React, { useContext } from "react";
 import { userContext } from "../../userContext";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Navbar.css";
 const Navbar = () => {
   const { user, setUser } = useContext(userContext);
   const history = useHistory();
-  const handleClick = () => {
-    setUser(null);
-  };
   return (
     <div>
+      {console.log("ds", user)}
       <nav className="navbar navbar-light bg-light">
         <div className="navbar-brand">
           {user ? (
@@ -18,13 +16,11 @@ const Navbar = () => {
                 {user}
               </button>
               <div className="logout__button">
-                <button
-                  type="button"
-                  onClick={handleClick}
-                  className="btn btn-danger"
-                >
-                  LOGOUT
-                </button>
+                <Link to="/login">
+                  <button type="button" className="btn btn-danger">
+                    LOGOUT
+                  </button>
+                </Link>
               </div>
             </div>
           ) : (

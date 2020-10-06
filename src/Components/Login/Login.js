@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import "./Login.css";
 import { Link, useHistory } from "react-router-dom";
 import { userContext } from "../../userContext";
+import Cookies from "js-cookie";
 const Login = () => {
   let history = useHistory();
   const { setUser } = useContext(userContext);
@@ -41,6 +42,7 @@ const Login = () => {
       if (serachForEmail(users, email, password)) {
         setUser(email);
         history.push("/");
+        Cookies.set("user", email);
       } else {
         console.log("denied");
       }
