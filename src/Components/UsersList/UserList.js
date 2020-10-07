@@ -38,10 +38,34 @@ const UserList = (props) => {
     localStorage.setItem("users", JSON.stringify(arr));
   };
 
+  //Searched Value
+
+  const getSearchedVal = (newVal) => {
+    if (newVal !== "") {
+      setUsers(
+        users.filter((user) => {
+          return user.email.includes(newVal);
+        })
+      );
+    } else {
+      let arr = [];
+      let retrievedData = localStorage.getItem("users");
+      let jsonUsers = JSON.parse(retrievedData);
+      for (let i in jsonUsers) {
+        arr.push(jsonUsers[i]);
+      }
+      arr = arr.filter(function (obj) {
+        return obj.email !== user;
+      });
+
+      setUsers(arr);
+    }
+  };
+
   return (
     <div>
       <div className="searchbar">
-        <Seaerchbar />
+        <Seaerchbar getSearchedVal={getSearchedVal.bind(this)} />
       </div>
       <div className="card">
         {users.map((human) => (
