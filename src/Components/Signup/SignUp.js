@@ -1,6 +1,8 @@
 import React, { Component, useState, useCallback } from "react";
+import bcrypt from "bcryptjs";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
+const saltRounds = 10;
 const SignUp = () => {
   const validEmailRegex = RegExp(
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -28,6 +30,7 @@ const SignUp = () => {
     }
     return true;
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm(errors)) {
