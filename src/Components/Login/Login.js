@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import "./Login.css";
 import { Link, useHistory } from "react-router-dom";
 import { userContext } from "../../userContext";
+import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
 const Login = () => {
   let history = useHistory();
@@ -9,17 +10,41 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const serachForEmail = (users, email, password) => {
-    console.log(email);
-    for (let i in users) {
-      if (users[i].email === email) {
-        if (users[i].password === password) {
-          return true;
+
+  // Hashing Checker
+  const HashingChecker = async (hashpassword) => {
+    try {
+      bcrypt.compare(
+        password,
+        hashpassword,
+        await function (err, isMatch) {
+          if (isMatch) {
+            return true;
+          } else {
+            return false;
+          }
         }
-        console.log("Password err");
-      }
+      );
+    } catch (err) {
+      console.log(err);
     }
-    return false;
+  };
+
+  const serachForEmail = async (users, email, password) => {
+    try {
+      for (let i in users) {
+        if (users[i].email === email) {
+          if (HashingChecker(users[i].password)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+      console.log("Account ?");
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleChange = (event) => {
     if (event.target.id === "email") {
@@ -39,7 +64,7 @@ const Login = () => {
       for (let i in jsonUsers) {
         users.push(jsonUsers[i]);
       }
-      if (serachForEmail(users, email, password)) {
+      if (await serachForEmail(users, email, password)) {
         setUser(email);
         history.push("/");
         Cookies.set("user", email);

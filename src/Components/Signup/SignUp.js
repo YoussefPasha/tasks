@@ -31,6 +31,27 @@ const SignUp = () => {
     return true;
   };
 
+  //Hashing Password
+
+  const HashingPassword = (users) => {
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+      if (err) {
+        throw err;
+      } else {
+        bcrypt.hash(data.password, salt, function (err, hash) {
+          if (err) {
+            throw err;
+          } else {
+            let val = { ...data };
+            val.password = hash;
+            users.push(val);
+            localStorage.setItem("users", JSON.stringify(users));
+          }
+        });
+      }
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm(errors)) {
@@ -43,15 +64,13 @@ const SignUp = () => {
             users.push(jsonUsers[i]);
           }
           if (serachForEmail(users, data.email)) {
-            users.push(data);
-            localStorage.setItem("users", JSON.stringify(users));
+            HashingPassword(users);
           } else {
             console.log("error");
           }
         } else {
           let users = [];
-          users.push(data);
-          localStorage.setItem("users", JSON.stringify(users));
+          HashingPassword(users);
         }
       } catch (e) {
         console.log(e);
