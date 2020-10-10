@@ -1,5 +1,6 @@
 .SearchBox {
+  text-align: center;
+  position: static;
   display: flex;
-  justify-content: space-between;
-  margin-left: 440px;
+  justify-content: center;
 }

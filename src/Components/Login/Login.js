@@ -14,23 +14,20 @@ const Login = () => {
   // Hashing Checker
   const HashingChecker = async (hashpassword) => {
     try {
-      bcrypt.compare(
-        password,
-        hashpassword,
-        await function (err, isMatch) {
-          if (isMatch) {
-            return true;
-          } else {
-            return false;
-          }
+      bcrypt.compare(password, hashpassword, function (err, isMatch) {
+        if (isMatch) {
+          return true;
+        } else {
+          console.log(err);
+          return false;
         }
-      );
+      });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const serachForEmail = async (users, email, password) => {
+  const serachForEmail = async (users, email) => {
     try {
       for (let i in users) {
         if (users[i].email === email) {
@@ -58,7 +55,7 @@ const Login = () => {
   const handleFormSubmit = async (event) => {
     try {
       event.preventDefault();
-      let retrievedData = await localStorage.getItem("users");
+      let retrievedData = localStorage.getItem("users");
       let jsonUsers = JSON.parse(retrievedData);
       let users = [];
       for (let i in jsonUsers) {
